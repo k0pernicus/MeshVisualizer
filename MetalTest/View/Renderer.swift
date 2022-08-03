@@ -8,16 +8,21 @@
 import Foundation
 import MetalKit
 
+let texturedExample: Bool = false
+
 class Renderer: NSObject, MTKViewDelegate {
     var parent: ContentView
     var metalDevice: MTLDevice!
     var metalCommandQueue: MTLCommandQueue!
-    var allocator: MTKMeshBufferAllocator!
-    let pipelineState: MTLRenderPipelineState
-    var scene: RenderScene
-    var mesh: Mesh
+   
+    let allocator: MTKMeshBufferAllocator!
     
-    init(_ parent: ContentView) {
+    let pipelineState: MTLRenderPipelineState
+    
+    var scene: RenderScene
+    let mesh: Mesh
+    
+    init(_ parent: ContentView, scene: RenderScene) {
         self.parent = parent
         if let metalDevice = MTLCreateSystemDefaultDevice() {
             self.metalDevice = metalDevice
@@ -25,12 +30,17 @@ class Renderer: NSObject, MTKViewDelegate {
         self.metalCommandQueue = metalDevice.makeCommandQueue()
         self.allocator = MTKMeshBufferAllocator(device: self.metalDevice)
         
-        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "IronMan")
+        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Crate")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
-        pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
-        pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
+        if (texturedExample) {
+            pipelineDescriptor.vertexFunction = library?.makeFunction(name: "texVertexShader")
+            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "texFragmentShader")
+        } else {
+            pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
+            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
+        }
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(self.mesh.metalMesh.vertexDescriptor)
         
@@ -40,13 +50,7 @@ class Renderer: NSObject, MTKViewDelegate {
             fatalError("cannot create the render pipeline state")
         }
         
-        self.scene = RenderScene(components: [
-            // Position of the object to render
-            Basic(
-                position: [400.0, 0.0, 0.0],
-                angle: [90.0, 0.0, 0.0]
-            ),
-        ], rotate: true)
+        self.scene = scene
         
         super.init()
     }
@@ -78,10 +82,13 @@ class Renderer: NSObject, MTKViewDelegate {
             up: scene.camera.up
         )
         cameraData.projection = Algebra.PerspectiveProjection(
-            fovy: 45, aspect: Float(HEIGHT / WIDTH), near: 0.1, far: 1000
+            fovy: 45, aspect: Float(RENDERER_HEIGHT / RENDERER_WIDTH), near: 0.1, far: 24
         )
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
-        renderEncoder?.setVertexBuffer(mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+        
+        renderEncoder?.setVertexBuffer(self.mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+        // renderEncoder?.setVertexTexture(self.material.texture, index: 0)
+        // renderEncoder?.setFragmentSamplerState(self.material.sampler, index: 0)
         
         // TODO: move to the scene ?
         for component in scene.components {
@@ -97,8 +104,8 @@ class Renderer: NSObject, MTKViewDelegate {
                     indexBufferOffset: submesh.indexBuffer.offset
                 )
             }
-        
         }
+        
         renderEncoder?.endEncoding()
         
         commandBuffer?.present(drawable)

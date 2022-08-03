@@ -21,16 +21,23 @@ class Mesh {
         let meshVertexDescriptor = MTLVertexDescriptor()
         var offset: Int = 0
         
+        // Position
         meshVertexDescriptor.attributes[0].format = .float3
         meshVertexDescriptor.attributes[0].offset = offset
         meshVertexDescriptor.attributes[0].bufferIndex = 0
-        
         offset += MemoryLayout<SIMD3<Float>>.stride
+        
+        // Texture
+        meshVertexDescriptor.attributes[1].format = .float2
+        meshVertexDescriptor.attributes[1].offset = offset
+        meshVertexDescriptor.attributes[1].bufferIndex = 0
+        offset += MemoryLayout<SIMD2<Float>>.stride
         
         meshVertexDescriptor.layouts[0].stride = offset
         
         let meshDescriptor = MTKModelIOVertexDescriptorFromMetal(meshVertexDescriptor)
         (meshDescriptor.attributes[0] as! MDLVertexAttribute).name = MDLVertexAttributePosition
+        (meshDescriptor.attributes[1] as! MDLVertexAttribute).name = MDLVertexAttributeTextureCoordinate
         
         let asset = MDLAsset(url: objMeshURL, vertexDescriptor: meshDescriptor, bufferAllocator: allocator)
         

@@ -34,4 +34,3 @@ vertex Fragment vertexShader(
 fragment float4 fragmentShader(Fragment input [[ stage_in ]]) {
     return input.color;
 }
-

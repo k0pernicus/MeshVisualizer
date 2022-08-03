@@ -10,14 +10,16 @@ import MetalKit
 
 struct ContentView: UIViewRepresentable {
     
+    @EnvironmentObject var scene: RenderScene
+    
     func makeCoordinator() -> Renderer {
-        Renderer(self)
+        Renderer(self, scene: scene)
     }
     
     func makeUIView(context: UIViewRepresentableContext<ContentView>) -> MTKView {
         let mtkView = MTKView()
         mtkView.delegate = context.coordinator
-        mtkView.preferredFramesPerSecond = 60
+        mtkView.preferredFramesPerSecond = 60 // TODO: handle pro-motion ?
         mtkView.enableSetNeedsDisplay = true
         
         if let metalDevice = MTLCreateSystemDefaultDevice() {
@@ -33,11 +35,5 @@ struct ContentView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIViewType, context: UIViewRepresentableContext<ContentView>) {
         
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

@@ -7,15 +7,22 @@
 
 import SwiftUI
 
-let WIDTH: CGFloat = 1920
-let HEIGHT: CGFloat = 1080
+let RENDERER_HEIGHT: CGFloat = 920
+let RENDERER_WIDTH: CGFloat = 1280
 
 @main
 struct MetalTestApp: App {
+    @StateObject private var scene = RenderScene(components: [
+        Basic(
+            position: [8.0, 0.0, 0.0],
+            angle: [90.0, 0.0, 0.0]
+        ),
+    ], rotate: true)
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .frame(width: WIDTH, height: HEIGHT, alignment: .center)
+            AppView()
+                .environmentObject(scene)
         }
     }
 }
