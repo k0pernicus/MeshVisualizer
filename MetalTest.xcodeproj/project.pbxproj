@@ -24,6 +24,7 @@
 		69B7B3F8289C59310035DD52 /* Candy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3F7289C59310035DD52 /* Candy.jpg */; };
 		69B7B3FA289C5BF30035DD52 /* Noise.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3F9289C5BF30035DD52 /* Noise.jpg */; };
 		69B7B3FC289C5E590035DD52 /* Crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3FB289C5E590035DD52 /* Crate.jpg */; };
+		69B7B400289C613E0035DD52 /* Circle_Box.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3FF289C613E0035DD52 /* Circle_Box.obj */; };
 		69C58B172896826100AE177F /* Coffee_Cup.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69C58B162896826000AE177F /* Coffee_Cup.obj */; };
 		69C58B1A2896838600AE177F /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C58B192896838600AE177F /* Mesh.swift */; };
 		69C58B1C2896913000AE177F /* IronMan.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69C58B1B2896913000AE177F /* IronMan.obj */; };
@@ -49,6 +50,7 @@
 		69B7B3F7289C59310035DD52 /* Candy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Candy.jpg; sourceTree = "<group>"; };
 		69B7B3F9289C5BF30035DD52 /* Noise.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Noise.jpg; sourceTree = "<group>"; };
 		69B7B3FB289C5E590035DD52 /* Crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Crate.jpg; sourceTree = "<group>"; };
+		69B7B3FF289C613E0035DD52 /* Circle_Box.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Circle_Box.obj; sourceTree = "<group>"; };
 		69C58B162896826000AE177F /* Coffee_Cup.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Coffee_Cup.obj; sourceTree = "<group>"; };
 		69C58B192896838600AE177F /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		69C58B1B2896913000AE177F /* IronMan.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IronMan.obj; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 		69B7B3FE289C5E830035DD52 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				69B7B3FF289C613E0035DD52 /* Circle_Box.obj */,
 				69B7B3F3289C4A4B0035DD52 /* Crate.obj */,
 				69C58B162896826000AE177F /* Coffee_Cup.obj */,
 				69C58B1B2896913000AE177F /* IronMan.obj */,
@@ -235,6 +238,7 @@
 				69B7B3FA289C5BF30035DD52 /* Noise.jpg in Resources */,
 				69C58B1C2896913000AE177F /* IronMan.obj in Resources */,
 				69053607289074AC00F7806F /* Preview Assets.xcassets in Resources */,
+				69B7B400289C613E0035DD52 /* Circle_Box.obj in Resources */,
 				69053604289074AC00F7806F /* Assets.xcassets in Resources */,
 				69C58B172896826100AE177F /* Coffee_Cup.obj in Resources */,
 				69B7B3F8289C59310035DD52 /* Candy.jpg in Resources */,

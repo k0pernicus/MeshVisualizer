@@ -34,7 +34,7 @@ class Renderer: NSObject, MTKViewDelegate {
         self.allocator = MTKMeshBufferAllocator(device: self.metalDevice)
         self.materialAllocator = MTKTextureLoader(device: self.metalDevice)
         
-        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Crate")
+        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Circle_Box")
         self.material = Material(device: self.metalDevice, allocator: self.materialAllocator, filename: "Crate")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -88,7 +88,7 @@ class Renderer: NSObject, MTKViewDelegate {
             up: scene.camera.up
         )
         cameraData.projection = Algebra.PerspectiveProjection(
-            fovy: 45, aspect: Float(RENDERER_HEIGHT / RENDERER_WIDTH), near: 0.1, far: 24
+            fovy: 45, aspect: Float(RENDERER_HEIGHT / RENDERER_WIDTH), near: 0.1, far: 44
         )
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
         

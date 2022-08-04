@@ -14,8 +14,8 @@ let RENDERER_WIDTH: CGFloat = 1280
 struct MetalTestApp: App {
     @StateObject private var scene = RenderScene(components: [
         Basic(
-            position: [8.0, 0.0, 0.0],
-            angle: [90.0, 0.0, 0.0]
+            position: [28.0, 0.0, 0.0],
+            angle: [0.0, 0.0, 0.0]
         ),
     ], rotate: true)
     
