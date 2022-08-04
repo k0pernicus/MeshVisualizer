@@ -34,14 +34,9 @@ struct AppView: View {
                             scene.rotateCamera(degrees: gesture.degrees)
                         }
                 )
-                /*.gesture(
-                    LongPressGesture(minimumDuration: 1.5)
-                        .onEnded { finished in
-                            if (finished) {
-                                scene.resetCameraPosition()
-                            }
-                        }
-                )*/
+                .onTapGesture(count: 3, perform: {
+                    scene.resetCameraPosition()
+                })
         }
         .aspectRatio(contentMode: .fill)
         .fixedSize()
