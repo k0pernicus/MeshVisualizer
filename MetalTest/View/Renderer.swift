@@ -16,11 +16,14 @@ class Renderer: NSObject, MTKViewDelegate {
     var metalCommandQueue: MTLCommandQueue!
    
     let allocator: MTKMeshBufferAllocator!
+    let materialAllocator: MTKTextureLoader
     
     let pipelineState: MTLRenderPipelineState
+    let depthStencilState: MTLDepthStencilState
     
     var scene: RenderScene
     let mesh: Mesh
+    let material: Material
     
     init(_ parent: ContentView, scene: RenderScene) {
         self.parent = parent
@@ -29,20 +32,23 @@ class Renderer: NSObject, MTKViewDelegate {
         }
         self.metalCommandQueue = metalDevice.makeCommandQueue()
         self.allocator = MTKMeshBufferAllocator(device: self.metalDevice)
+        self.materialAllocator = MTKTextureLoader(device: self.metalDevice)
         
         self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Crate")
+        self.material = Material(device: self.metalDevice, allocator: self.materialAllocator, filename: "Crate")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
-        if (texturedExample) {
-            pipelineDescriptor.vertexFunction = library?.makeFunction(name: "texVertexShader")
-            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "texFragmentShader")
-        } else {
-            pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
-            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
-        }
+        pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
+        pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(self.mesh.metalMesh.vertexDescriptor)
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        
+        let depthStencilDescriptor = MTLDepthStencilDescriptor()
+        depthStencilDescriptor.depthCompareFunction = .less
+        depthStencilDescriptor.isDepthWriteEnabled = true
+        self.depthStencilState = self.metalDevice.makeDepthStencilState(descriptor: depthStencilDescriptor)!
         
         do {
             try pipelineState = metalDevice.makeRenderPipelineState(descriptor: pipelineDescriptor)
@@ -68,7 +74,7 @@ class Renderer: NSObject, MTKViewDelegate {
         let commandBuffer = metalCommandQueue.makeCommandBuffer()
         
         let renderPassDescriptor = view.currentRenderPassDescriptor
-        renderPassDescriptor?.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        renderPassDescriptor?.colorAttachments[0].clearColor = MTLClearColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         renderPassDescriptor?.colorAttachments[0].loadAction = .clear
         renderPassDescriptor?.colorAttachments[0].storeAction = .store
         
@@ -87,8 +93,9 @@ class Renderer: NSObject, MTKViewDelegate {
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
         
         renderEncoder?.setVertexBuffer(self.mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
-        // renderEncoder?.setVertexTexture(self.material.texture, index: 0)
-        // renderEncoder?.setFragmentSamplerState(self.material.sampler, index: 0)
+        renderEncoder?.setFragmentTexture(self.material.texture, index: 0)
+        renderEncoder?.setDepthStencilState(self.depthStencilState)
+        renderEncoder?.setFragmentSamplerState(self.material.sampler, index: 0)
         
         // TODO: move to the scene ?
         for component in scene.components {
@@ -97,7 +104,7 @@ class Renderer: NSObject, MTKViewDelegate {
             renderEncoder?.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
             for submesh in self.mesh.metalMesh.submeshes {
                 renderEncoder?.drawIndexedPrimitives(
-                    type: .line,
+                    type: .triangle,
                     indexCount: submesh.indexCount,
                     indexType: submesh.indexType,
                     indexBuffer: submesh.indexBuffer.buffer,

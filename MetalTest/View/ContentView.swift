@@ -29,6 +29,7 @@ struct ContentView: UIViewRepresentable {
         mtkView.framebufferOnly = false
         mtkView.drawableSize = mtkView.frame.size
         mtkView.isPaused = false
+        mtkView.depthStencilPixelFormat = .depth32Float
         
         return mtkView
     }

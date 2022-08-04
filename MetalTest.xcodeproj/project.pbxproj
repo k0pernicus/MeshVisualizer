@@ -20,6 +20,10 @@
 		6922D7C928950B40008F4BCA /* LinearAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922D7C828950B40008F4BCA /* LinearAlgebra.swift */; };
 		69B7B3F2289C4A1C0035DD52 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B7B3F1289C4A1C0035DD52 /* AppView.swift */; };
 		69B7B3F4289C4A4B0035DD52 /* Crate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3F3289C4A4B0035DD52 /* Crate.obj */; };
+		69B7B3F6289C578F0035DD52 /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B7B3F5289C578F0035DD52 /* Material.swift */; };
+		69B7B3F8289C59310035DD52 /* Candy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3F7289C59310035DD52 /* Candy.jpg */; };
+		69B7B3FA289C5BF30035DD52 /* Noise.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3F9289C5BF30035DD52 /* Noise.jpg */; };
+		69B7B3FC289C5E590035DD52 /* Crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3FB289C5E590035DD52 /* Crate.jpg */; };
 		69C58B172896826100AE177F /* Coffee_Cup.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69C58B162896826000AE177F /* Coffee_Cup.obj */; };
 		69C58B1A2896838600AE177F /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C58B192896838600AE177F /* Mesh.swift */; };
 		69C58B1C2896913000AE177F /* IronMan.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69C58B1B2896913000AE177F /* IronMan.obj */; };
@@ -41,6 +45,10 @@
 		6922D7C828950B40008F4BCA /* LinearAlgebra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebra.swift; sourceTree = "<group>"; };
 		69B7B3F1289C4A1C0035DD52 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		69B7B3F3289C4A4B0035DD52 /* Crate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Crate.obj; sourceTree = "<group>"; };
+		69B7B3F5289C578F0035DD52 /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
+		69B7B3F7289C59310035DD52 /* Candy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Candy.jpg; sourceTree = "<group>"; };
+		69B7B3F9289C5BF30035DD52 /* Noise.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Noise.jpg; sourceTree = "<group>"; };
+		69B7B3FB289C5E590035DD52 /* Crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Crate.jpg; sourceTree = "<group>"; };
 		69C58B162896826000AE177F /* Coffee_Cup.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Coffee_Cup.obj; sourceTree = "<group>"; };
 		69C58B192896838600AE177F /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		69C58B1B2896913000AE177F /* IronMan.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IronMan.obj; sourceTree = "<group>"; };
@@ -111,10 +119,11 @@
 			isa = PBXGroup;
 			children = (
 				69B7B3F1289C4A1C0035DD52 /* AppView.swift */,
-				6920D10328959F6B00495CE0 /* RenderScene.swift */,
-				6905360D2890755600F7806F /* Renderer.swift */,
 				69053601289074AA00F7806F /* ContentView.swift */,
+				69B7B3F5289C578F0035DD52 /* Material.swift */,
 				69C58B192896838600AE177F /* Mesh.swift */,
+				6905360D2890755600F7806F /* Renderer.swift */,
+				6920D10328959F6B00495CE0 /* RenderScene.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -135,12 +144,31 @@
 			path = Include;
 			sourceTree = "<group>";
 		};
-		69C58B18289682FC00AE177F /* ModelAssets */ = {
+		69B7B3FD289C5E7D0035DD52 /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				69B7B3F7289C59310035DD52 /* Candy.jpg */,
+				69B7B3FB289C5E590035DD52 /* Crate.jpg */,
+				69B7B3F9289C5BF30035DD52 /* Noise.jpg */,
+			);
+			path = Textures;
+			sourceTree = "<group>";
+		};
+		69B7B3FE289C5E830035DD52 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
 				69B7B3F3289C4A4B0035DD52 /* Crate.obj */,
 				69C58B162896826000AE177F /* Coffee_Cup.obj */,
 				69C58B1B2896913000AE177F /* IronMan.obj */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		69C58B18289682FC00AE177F /* ModelAssets */ = {
+			isa = PBXGroup;
+			children = (
+				69B7B3FE289C5E830035DD52 /* Objects */,
+				69B7B3FD289C5E7D0035DD52 /* Textures */,
 			);
 			path = ModelAssets;
 			sourceTree = "<group>";
@@ -204,10 +232,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				69B7B3F4289C4A4B0035DD52 /* Crate.obj in Resources */,
+				69B7B3FA289C5BF30035DD52 /* Noise.jpg in Resources */,
 				69C58B1C2896913000AE177F /* IronMan.obj in Resources */,
 				69053607289074AC00F7806F /* Preview Assets.xcassets in Resources */,
 				69053604289074AC00F7806F /* Assets.xcassets in Resources */,
 				69C58B172896826100AE177F /* Coffee_Cup.obj in Resources */,
+				69B7B3F8289C59310035DD52 /* Candy.jpg in Resources */,
+				69B7B3FC289C5E590035DD52 /* Crate.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +253,7 @@
 				69C58B1A2896838600AE177F /* Mesh.swift in Sources */,
 				69053602289074AA00F7806F /* ContentView.swift in Sources */,
 				6920D1022895925600495CE0 /* Camera.swift in Sources */,
+				69B7B3F6289C578F0035DD52 /* Material.swift in Sources */,
 				69B7B3F2289C4A1C0035DD52 /* AppView.swift in Sources */,
 				6920D1092895A21100495CE0 /* Basic.swift in Sources */,
 				6905360E2890755600F7806F /* Renderer.swift in Sources */,

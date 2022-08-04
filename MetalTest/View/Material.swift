@@ -35,7 +35,7 @@ struct Material {
         samplerDescriptor.magFilter = .linear
         samplerDescriptor.mipFilter = .linear
         samplerDescriptor.maxAnisotropy = 8
-        
+
         self.sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
     }
     

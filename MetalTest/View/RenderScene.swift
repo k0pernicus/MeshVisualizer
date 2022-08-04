@@ -46,25 +46,13 @@ class RenderScene: ObservableObject {
         }
         // Update the camera position in the world
         camera.update()
-        // Update the position of the world's components
-        // based on the camera view
-        for component in components {
-            var component = component
-            /*
-            component.angle.x += self.rng[0]
-            if component.angle.x > Algebra.MAX_ANGLE {
-                component.angle.x -= Algebra.MAX_ANGLE
-            }
-            component.angle.y += self.rng[1]
-            if component.angle.y > Algebra.MAX_ANGLE {
-                component.angle.y -= Algebra.MAX_ANGLE
-            }
-            */
-            component.angle.z += self.rng[2]
-            if component.angle.z > Algebra.MAX_ANGLE {
-                component.angle.z -= Algebra.MAX_ANGLE
-            }
-        }
+        // for component in components {
+        //      var component = component
+        //      component.angle.z += self.rng[2]
+        //      if component.angle.z > Algebra.MAX_ANGLE {
+        //          component.angle.z -= Algebra.MAX_ANGLE
+        //      }
+        //  }
         self.frameCount += 1;
     }
     
@@ -93,7 +81,8 @@ class RenderScene: ObservableObject {
     }
     
     func rotateCamera(degrees: CGFloat) {
-        camera.angle.y += Float(degrees) / 100
+        camera.angle.z += Float(degrees) / 20
+        // camera.position.y += Float(degrees) / 100
     }
     
     func resetCameraPosition() {
