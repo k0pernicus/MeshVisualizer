@@ -46,13 +46,9 @@ class RenderScene: ObservableObject {
         }
         // Update the camera position in the world
         camera.update()
-         for component in components {
-              var component = component
-              component.angle.z += self.rng[2]
-              if component.angle.z > Algebra.MAX_ANGLE {
-                  component.angle.z -= Algebra.MAX_ANGLE
-              }
-          }
+        for component in components {
+            component.update()
+        }
         self.frameCount += 1;
     }
     

@@ -7,21 +7,21 @@
 
 import Foundation
 
-class Camera: Object3D {
+class Camera: BaseObject3D {
     // The position of the object in the world space
     var position: simd_float3
     var angle: simd_float3
-    let in_radians: Bool
+    let uses_radians: Bool
     
     // The associated transformation matrices
     var forward: vector_float3
     var right: vector_float3
     var up: vector_float3
     
-    init(position: vector_float3, angle: vector_float3, in_radians: Bool = false) {
+    init(position: vector_float3, angle: vector_float3, uses_radians: Bool = false) {
         self.position = position
         self.angle = angle
-        self.in_radians = in_radians
+        self.uses_radians = uses_radians
         self.forward = [0.0, 0.0, 0.0]
         self.right = [0.0, 0.0, 0.0]
         self.up = [0.0, 0.0, 0.0]
@@ -29,7 +29,7 @@ class Camera: Object3D {
     
     /// The update function includes the radians conversion
     func update() {
-        if (in_radians) {
+        if (uses_radians) {
             self.forward = [
                 cos(self.angle[2]) * sin(self.angle[1]),
                 sin(self.angle[2]) * sin(self.angle[1]),
