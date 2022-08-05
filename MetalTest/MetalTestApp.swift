@@ -15,7 +15,8 @@ struct MetalTestApp: App {
     @StateObject private var scene = RenderScene(components: [
         Object3D(
             position: [28.0, 0.0, 0.0],
-            angle: [0.0, 0.0, 0.0]
+            angle: [0.0, 0.0, 0.0],
+            allows_transformation: true
         ),
     ], rotate: true)
     

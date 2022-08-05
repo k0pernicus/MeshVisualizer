@@ -34,7 +34,7 @@ class Renderer: NSObject, MTKViewDelegate {
         self.allocator = MTKMeshBufferAllocator(device: self.metalDevice)
         self.materialAllocator = MTKTextureLoader(device: self.metalDevice)
         
-        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Circle_Box")
+        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Crate")
         self.material = Material(device: self.metalDevice, allocator: self.materialAllocator, filename: "Crate")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()

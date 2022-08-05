@@ -20,7 +20,6 @@ class RenderScene: ObservableObject {
     @Published var components: [Object3D]
     @Published var frameCount: Int = 0
     
-    private let rng: [Float]
     private var endDate: Date // Compute FPS
     
     init(components: [Object3D], rotate: Bool = true) {
@@ -29,9 +28,6 @@ class RenderScene: ObservableObject {
             angle: DEFAULT_CAMERA_ANGLE
         )
         self.components = components
-        self.rng = rotate ?
-            [Float.random(in: 0..<1), Float.random(in: 0..<1), Float.random(in: 0..<1)] :
-            [0.0, 0.0, 0.0]
         self.endDate = Date().addingTimeInterval(1)
     }
     
