@@ -10,8 +10,16 @@ import MetalKit
 
 class Mesh {
         
-    let modelIOMesh: MDLMesh // Load object render
-    let metalMesh: MTKMesh // The converted object to render
+    /// Load object render
+    let modelIOMesh: MDLMesh
+    /// The converted (Metal) object to render
+    let metalMesh: MTKMesh
+    /// The height of the asset
+    let height: Float
+    /// The width of the asset
+    let width: Float
+    /// The depth of the asset
+    let depth: Float
     
     init(device: MTLDevice, allocator: MTKMeshBufferAllocator, filename: String) {
         guard let objMeshURL = Bundle.main.url(forResource: filename, withExtension: "obj") else {
@@ -40,6 +48,14 @@ class Mesh {
         (meshDescriptor.attributes[1] as! MDLVertexAttribute).name = MDLVertexAttributeTextureCoordinate
         
         let asset = MDLAsset(url: objMeshURL, vertexDescriptor: meshDescriptor, bufferAllocator: allocator)
+        
+        let maxBounds = asset.boundingBox.maxBounds
+        let minBounds = asset.boundingBox.minBounds
+        
+        // TODO: Update this in case of animation
+        self.width = maxBounds.x - minBounds.x
+        self.height = maxBounds.y - minBounds.y
+        self.depth = maxBounds.z - minBounds.z
         
         self.modelIOMesh = asset.childObjects(of: MDLMesh.self).first as! MDLMesh
         do {

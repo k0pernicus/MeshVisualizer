@@ -8,25 +8,29 @@
 import Foundation
 import MetalKit
 
+/// Default options:
+/// * Do not consider the texture as SRGB,
+/// * Generate mipmap by default for better results.
+let DEFAULT_OPTIONS : [MTKTextureLoader.Option: Any] = [
+    .SRGB: false,
+    .generateMipmaps: true
+]
+
+/// Allocate resources for a new texture, or material
 struct Material {
     
     let texture: MTLTexture
     let sampler: MTLSamplerState
     
-    init(device: MTLDevice, allocator: MTKTextureLoader, filename: String) {
+    init(device: MTLDevice, allocator: MTKTextureLoader, filename: String, options: [MTKTextureLoader.Option: Any] = DEFAULT_OPTIONS) {
         guard let texURL = Bundle.main.url(forResource: filename, withExtension: "jpg") else {
-            fatalError("cannot load .jpg file")
+            fatalError("cannot load material file '\(filename).jpg'")
         }
-        
-        let options : [MTKTextureLoader.Option: Any] = [
-            .SRGB: false,
-            .generateMipmaps: true
-        ]
         
         do {
             self.texture = try allocator.newTexture(URL: texURL, options: options)
         } catch {
-            fatalError("could not load the texture")
+            fatalError("error allocating the texture with URL '\(texURL)'")
         }
         
         let samplerDescriptor = MTLSamplerDescriptor()

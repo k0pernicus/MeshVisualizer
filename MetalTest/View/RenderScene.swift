@@ -19,18 +19,19 @@ class RenderScene: ObservableObject {
     @Published var camera: Camera
     @Published var components: [Object3D]
     @Published var frameCount: Int = 0
-    @Published var renderTexture: Bool = true
+    @Published var renderTexture: Bool
     @Published var strip: Bool = false
     
     private var endDate: Date // Compute FPS
     
-    init(components: [Object3D], rotate: Bool = true) {
+    init(components: [Object3D], rotate: Bool = true, renderTexture: Bool = true) {
         self.camera = Camera(
             position: DEFAULT_CAMERA_POSITION,
             angle: DEFAULT_CAMERA_ANGLE
         )
         self.components = components
         self.endDate = Date().addingTimeInterval(1)
+        self.renderTexture = renderTexture
     }
     
     func update() {
@@ -53,8 +54,8 @@ class RenderScene: ObservableObject {
     func render(renderEncoder: MTLRenderCommandEncoder) {
         for component in components {
             renderEncoder.setVertexBuffer(component.mesh!.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
-            renderEncoder.setFragmentSamplerState(component.material!.sampler, index: 0)
             if renderTexture {
+                renderEncoder.setFragmentSamplerState(component.material!.sampler, index: 0)
                 renderEncoder.setFragmentTexture(component.material!.texture, index: 0)
             }
             var transformationModel: matrix_float4x4 = Algebra.Identity(angle: component.angle)

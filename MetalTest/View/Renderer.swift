@@ -40,7 +40,11 @@ class Renderer: NSObject, MTKViewDelegate {
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
         pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
-        pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
+        if (scene.renderTexture) {
+            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "texFragmentShader")
+        } else {
+            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
+        }
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         // TODO: find a solution for this problem
         pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(scene.components[0].mesh!.metalMesh.vertexDescriptor)
@@ -92,7 +96,7 @@ class Renderer: NSObject, MTKViewDelegate {
         )
         cameraData.projection = Algebra.PerspectiveProjection(
             fieldOfViewY: DEFAULT_FIELD_OF_VIEW_Y_AXIS,
-            aspect: Float(RENDERER_HEIGHT / RENDERER_WIDTH),
+            aspect: Float(DEFAULT_RENDERER_HEIGHT / DEFAULT_RENDERER_WIDTH),
             nearLimit: 0.1,
             farLimit: DEFAULT_FAR_CAMERA_LIMIT
         )

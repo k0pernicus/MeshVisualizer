@@ -37,5 +37,13 @@ fragment float4 fragmentShader(
     texture2d<float> objectTexture [[ texture(0) ]],
     sampler samplerObject [[ sampler(0) ]]
 ) {
+    return float4(0.0, 0.0, 0.0, 1.0);
+}
+
+fragment float4 texFragmentShader(
+    Fragment input [[ stage_in ]],
+    texture2d<float> objectTexture [[ texture(0) ]],
+    sampler samplerObject [[ sampler(0) ]]
+) {
     return objectTexture.sample(samplerObject, input.texCoord);
 }

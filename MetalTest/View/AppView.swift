@@ -14,7 +14,7 @@ struct AppView: View {
     var body: some View {
         ZStack{
             ContentView()
-                .frame(width: RENDERER_WIDTH, height: RENDERER_HEIGHT, alignment: .center)
+                .frame(width: DEFAULT_RENDERER_WIDTH, height: DEFAULT_RENDERER_HEIGHT, alignment: .center)
                 .aspectRatio(contentMode: .fit)
                 .gesture(
                     DragGesture(minimumDistance: 2.0)
