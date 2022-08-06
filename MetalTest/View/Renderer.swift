@@ -23,8 +23,6 @@ class Renderer: NSObject, MTKViewDelegate {
     let depthStencilState: MTLDepthStencilState
     
     var scene: RenderScene
-    let mesh: Mesh
-    let material: Material
     
     init(_ parent: ContentView, scene: RenderScene) {
         self.parent = parent
@@ -34,16 +32,18 @@ class Renderer: NSObject, MTKViewDelegate {
         self.metalCommandQueue = metalDevice.makeCommandQueue()
         self.allocator = MTKMeshBufferAllocator(device: self.metalDevice)
         self.materialAllocator = MTKTextureLoader(device: self.metalDevice)
-        
-        self.mesh = Mesh(device: self.metalDevice, allocator: self.allocator, filename: "Crate")
-        self.material = Material(device: self.metalDevice, allocator: self.materialAllocator, filename: "Crate")
+        for component in scene.components {
+            component.initMesh(device: self.metalDevice, allocator: self.allocator)
+            component.initMaterial(device: self.metalDevice, allocator: self.materialAllocator)
+        }
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
         pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
         pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(self.mesh.metalMesh.vertexDescriptor)
+        // TODO: find a solution for this problem
+        pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(scene.components[0].mesh!.metalMesh.vertexDescriptor)
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -98,8 +98,7 @@ class Renderer: NSObject, MTKViewDelegate {
         )
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
         
-        // TODO: move to the scene ?
-        scene.render(renderEncoder: renderEncoder!, mesh: self.mesh, material: self.material)
+        scene.render(renderEncoder: renderEncoder!)
         
         renderEncoder?.endEncoding()
         

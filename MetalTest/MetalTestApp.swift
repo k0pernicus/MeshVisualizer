@@ -16,22 +16,23 @@ struct MetalTestApp: App {
         Object3D(
             position: [28.0, 0.0, 0.0],
             angle: [0.0, 0.0, 0.0],
-            allows_transformation: true
+            allows_transformation: true,
+            meshFilename: "Crate",
+            materialFilename: "Noise"
         ),
         Object3D(
             position: [28.0, 0.0, 5.0],
             angle: [0.0, 0.0, 0.0],
-            allows_transformation: true
+            allows_transformation: true,
+            meshFilename: "Crate",
+            materialFilename: "Candy"
         ),
         Object3D(
             position: [28.0, 0.0, 10.0],
             angle: [0.0, 0.0, 0.0],
-            allows_transformation: true
-        ),
-        Object3D(
-            position: [28.0, 0.0, 15.0],
-            angle: [0.0, 0.0, 0.0],
-            allows_transformation: true
+            allows_transformation: true,
+            meshFilename: "Crate",
+            materialFilename: "Noise"
         ),
     ], rotate: true)
     
@@ -42,3 +43,5 @@ struct MetalTestApp: App {
         }
     }
 }
+
+

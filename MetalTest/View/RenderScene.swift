@@ -50,18 +50,17 @@ class RenderScene: ObservableObject {
         self.frameCount += 1;
     }
     
-    func render(renderEncoder: MTLRenderCommandEncoder, mesh: Mesh, material: Material) {
-        var offset = 0
+    func render(renderEncoder: MTLRenderCommandEncoder) {
         for component in components {
-            renderEncoder.setVertexBuffer(mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
-            renderEncoder.setFragmentSamplerState(material.sampler, index: 0)
+            renderEncoder.setVertexBuffer(component.mesh!.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+            renderEncoder.setFragmentSamplerState(component.material!.sampler, index: 0)
             if renderTexture {
-                renderEncoder.setFragmentTexture(material.texture, index: 0)
+                renderEncoder.setFragmentTexture(component.material!.texture, index: 0)
             }
             var transformationModel: matrix_float4x4 = Algebra.Identity(angle: component.angle)
             transformationModel = Algebra.Identity(translation: component.position) * transformationModel
             renderEncoder.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
-            for submesh in mesh.metalMesh.submeshes {
+            for submesh in component.mesh!.metalMesh.submeshes {
                 renderEncoder.drawIndexedPrimitives(
                     type: self.strip ? .line : .triangle,
                     indexCount: submesh.indexCount,
@@ -70,7 +69,6 @@ class RenderScene: ObservableObject {
                     indexBufferOffset: submesh.indexBuffer.offset
                 )
             }
-            offset += 1
         }
     }
     
