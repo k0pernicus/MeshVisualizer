@@ -20,7 +20,7 @@ struct Material {
         
         let options : [MTKTextureLoader.Option: Any] = [
             .SRGB: false,
-            .generateMipmaps: true,
+            .generateMipmaps: true
         ]
         
         do {

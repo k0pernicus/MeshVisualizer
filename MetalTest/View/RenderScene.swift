@@ -19,6 +19,8 @@ class RenderScene: ObservableObject {
     @Published var camera: Camera
     @Published var components: [Object3D]
     @Published var frameCount: Int = 0
+    @Published var renderTexture: Bool = true
+    @Published var strip: Bool = false
     
     private var endDate: Date // Compute FPS
     
@@ -46,6 +48,30 @@ class RenderScene: ObservableObject {
             component.update()
         }
         self.frameCount += 1;
+    }
+    
+    func render(renderEncoder: MTLRenderCommandEncoder, mesh: Mesh, material: Material) {
+        var offset = 0
+        for component in components {
+            renderEncoder.setVertexBuffer(mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+            renderEncoder.setFragmentSamplerState(material.sampler, index: 0)
+            if renderTexture {
+                renderEncoder.setFragmentTexture(material.texture, index: 0)
+            }
+            var transformationModel: matrix_float4x4 = Algebra.Identity(angle: component.angle)
+            transformationModel = Algebra.Identity(translation: component.position) * transformationModel
+            renderEncoder.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            for submesh in mesh.metalMesh.submeshes {
+                renderEncoder.drawIndexedPrimitives(
+                    type: self.strip ? .line : .triangle,
+                    indexCount: submesh.indexCount,
+                    indexType: submesh.indexType,
+                    indexBuffer: submesh.indexBuffer.buffer,
+                    indexBufferOffset: submesh.indexBuffer.offset
+                )
+            }
+            offset += 1
+        }
     }
     
     func spinCamera(offset: CGSize) {

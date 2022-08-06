@@ -8,7 +8,8 @@
 import Foundation
 import MetalKit
 
-let texturedExample: Bool = false
+let DEFAULT_FAR_CAMERA_LIMIT: Float = 1000
+let DEFAULT_FIELD_OF_VIEW_Y_AXIS: Float = 45
 
 class Renderer: NSObject, MTKViewDelegate {
     var parent: ContentView
@@ -80,7 +81,9 @@ class Renderer: NSObject, MTKViewDelegate {
         
         let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor!)
         renderEncoder?.setRenderPipelineState(self.pipelineState)
+        renderEncoder?.setDepthStencilState(self.depthStencilState)
         
+        // Set the camera
         var cameraData: CameraParameters = CameraParameters()
         cameraData.view = Algebra.LookAt(
             camera: scene.camera.position,
@@ -88,30 +91,15 @@ class Renderer: NSObject, MTKViewDelegate {
             up: scene.camera.up
         )
         cameraData.projection = Algebra.PerspectiveProjection(
-            fovy: 45, aspect: Float(RENDERER_HEIGHT / RENDERER_WIDTH), near: 0.1, far: 44
+            fieldOfViewY: DEFAULT_FIELD_OF_VIEW_Y_AXIS,
+            aspect: Float(RENDERER_HEIGHT / RENDERER_WIDTH),
+            nearLimit: 0.1,
+            farLimit: DEFAULT_FAR_CAMERA_LIMIT
         )
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
         
-        renderEncoder?.setVertexBuffer(self.mesh.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
-        renderEncoder?.setFragmentTexture(self.material.texture, index: 0)
-        renderEncoder?.setDepthStencilState(self.depthStencilState)
-        renderEncoder?.setFragmentSamplerState(self.material.sampler, index: 0)
-        
         // TODO: move to the scene ?
-        for component in scene.components {
-            var transformationModel: matrix_float4x4 = Algebra.Identity(angle: component.angle)
-            transformationModel = Algebra.Identity(translation: component.position) * transformationModel
-            renderEncoder?.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
-            for submesh in self.mesh.metalMesh.submeshes {
-                renderEncoder?.drawIndexedPrimitives(
-                    type: .triangle,
-                    indexCount: submesh.indexCount,
-                    indexType: submesh.indexType,
-                    indexBuffer: submesh.indexBuffer.buffer,
-                    indexBufferOffset: submesh.indexBuffer.offset
-                )
-            }
-        }
+        scene.render(renderEncoder: renderEncoder!, mesh: self.mesh, material: self.material)
         
         renderEncoder?.endEncoding()
         

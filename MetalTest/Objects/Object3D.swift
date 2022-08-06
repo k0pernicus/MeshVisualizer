@@ -11,6 +11,8 @@ class Object3D: BaseObject3D {
     // The position of the object in the world space
     var position: simd_float3
     var angle: simd_float3
+    var mesh: Mesh?
+    var material: Material?
     var rotation_angle_z: Float?
     var allows_transformation: Bool
     
@@ -21,6 +23,9 @@ class Object3D: BaseObject3D {
         if self.allows_transformation {
             self.rotation_angle_z = Float.random(in: 0..<1)
         }
+        // TODO: set mesh and material according to
+        self.mesh = nil
+        self.material = nil
     }
     
     func update() {

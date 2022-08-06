@@ -85,12 +85,12 @@ enum Algebra {
     }
     
     // Translated from cpp, from 3dgep.com
-    static func PerspectiveProjection(fovy: Float, aspect: Float, near: Float, far: Float) -> float4x4 {
+    static func PerspectiveProjection(fieldOfViewY fovy: Float, aspect: Float, nearLimit: Float, farLimit: Float) -> float4x4 {
         let A: Float = aspect * 1 / tan(fovy * .pi / 360)
         let B: Float = 1 / tan(fovy * .pi / 360)
-        let C: Float = far / (far - near)
+        let C: Float = farLimit / (farLimit - nearLimit)
         let D: Float = 1
-        let E: Float = -near * far / (far - near)
+        let E: Float = -nearLimit * farLimit / (farLimit - nearLimit)
         return float4x4(
             [A, 0, 0, 0],
             [0, B, 0, 0],

@@ -23,7 +23,7 @@ struct AppView: View {
                         }
                 )
                 .gesture(
-                    MagnificationGesture(minimumScaleDelta: 5.0)
+                    MagnificationGesture()
                         .onChanged { gesture in
                             scene.focusCamera(magnitude: gesture.magnitude)
                         }
