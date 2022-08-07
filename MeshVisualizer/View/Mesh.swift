@@ -41,11 +41,18 @@ class Mesh {
         meshVertexDescriptor.attributes[1].bufferIndex = 0
         offset += MemoryLayout<SIMD2<Float>>.stride
         
+        // Normal vector (light)
+        meshVertexDescriptor.attributes[2].format = .float3
+        meshVertexDescriptor.attributes[2].offset = offset
+        meshVertexDescriptor.attributes[2].bufferIndex = 0
+        offset += MemoryLayout<SIMD3<Float>>.stride
+        
         meshVertexDescriptor.layouts[0].stride = offset
         
         let meshDescriptor = MTKModelIOVertexDescriptorFromMetal(meshVertexDescriptor)
         (meshDescriptor.attributes[0] as! MDLVertexAttribute).name = MDLVertexAttributePosition
         (meshDescriptor.attributes[1] as! MDLVertexAttribute).name = MDLVertexAttributeTextureCoordinate
+        (meshDescriptor.attributes[2] as! MDLVertexAttribute).name = MDLVertexAttributeNormal
         
         let asset = MDLAsset(url: objMeshURL, vertexDescriptor: meshDescriptor, bufferAllocator: allocator)
         

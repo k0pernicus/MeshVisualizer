@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "690535FB289074AA00F7806F"
-               BuildableName = "MetalTest.app"
+               BuildableName = "MeshVisualizer.app"
                BlueprintName = "MeshVisualizer"
                ReferencedContainer = "container:MeshVisualizer.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "690535FB289074AA00F7806F"
-            BuildableName = "MetalTest.app"
+            BuildableName = "MeshVisualizer.app"
             BlueprintName = "MeshVisualizer"
             ReferencedContainer = "container:MeshVisualizer.xcodeproj">
          </BuildableReference>
@@ -63,7 +63,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "690535FB289074AA00F7806F"
-            BuildableName = "MetalTest.app"
+            BuildableName = "MeshVisualizer.app"
             BlueprintName = "MeshVisualizer"
             ReferencedContainer = "container:MeshVisualizer.xcodeproj">
          </BuildableReference>

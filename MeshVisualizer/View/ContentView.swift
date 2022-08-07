@@ -8,6 +8,9 @@
 import SwiftUI
 import MetalKit
 
+// TODO: handle pro-motion ?
+let DEFAULT_PREFERRED_FPS : Int = 120
+
 struct ContentView: UIViewRepresentable {
     
     @EnvironmentObject var scene: RenderScene
@@ -19,7 +22,7 @@ struct ContentView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<ContentView>) -> MTKView {
         let mtkView = MTKView()
         mtkView.delegate = context.coordinator
-        mtkView.preferredFramesPerSecond = 60 // TODO: handle pro-motion ?
+        mtkView.preferredFramesPerSecond = DEFAULT_PREFERRED_FPS
         mtkView.enableSetNeedsDisplay = true
         
         if let metalDevice = MTLCreateSystemDefaultDevice() {

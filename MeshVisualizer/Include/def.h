@@ -17,6 +17,17 @@ struct Vertex {
 struct CameraParameters {
     matrix_float4x4 view;
     matrix_float4x4 projection;
+    vector_float3 position;
+};
+
+struct LightParameters {
+    vector_float3 forward;
+    vector_float3 color;
+};
+
+enum LightType {
+    Directional,
+    // TODO: Spot, Point, ...
 };
 
 #endif /* DEF_H */

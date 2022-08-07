@@ -33,14 +33,14 @@ class Renderer: NSObject, MTKViewDelegate {
         self.allocator = MTKMeshBufferAllocator(device: self.metalDevice)
         self.materialAllocator = MTKTextureLoader(device: self.metalDevice)
         for component in scene.components {
-            component.initMesh(device: self.metalDevice, allocator: self.allocator)
-            component.initMaterial(device: self.metalDevice, allocator: self.materialAllocator)
+            component.initMesh(device: self.metalDevice, allocator: self.allocator, cache: &scene.meshesCache)
+            component.initMaterial(device: self.metalDevice, allocator: self.materialAllocator, cache: &scene.materialsCache)
         }
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
         pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
-        if (scene.renderTexture) {
+        if (scene.enableTextureRendering) {
             pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "texFragmentShader")
         } else {
             pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
@@ -100,7 +100,14 @@ class Renderer: NSObject, MTKViewDelegate {
             nearLimit: 0.1,
             farLimit: DEFAULT_FAR_CAMERA_LIMIT
         )
+        cameraData.position = self.scene.camera.position;
         renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
+        
+        // Set the light
+        var lightParameters: LightParameters = LightParameters()
+        lightParameters.forward = scene.light.forward
+        lightParameters.color = scene.light.color
+        renderEncoder?.setFragmentBytes(&lightParameters, length: MemoryLayout<LightParameters>.stride, index: 0) // buffer 0 of the FS
         
         scene.render(renderEncoder: renderEncoder!)
         

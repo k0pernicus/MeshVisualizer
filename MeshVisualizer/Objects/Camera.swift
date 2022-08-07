@@ -7,8 +7,10 @@
 
 import Foundation
 
+/// Camera object, in a scene
 class Camera: BaseObject3D {
     // The position of the object in the world space
+    var tag: String = "camera"
     var position: simd_float3
     var angle: simd_float3
     let uses_radians: Bool
