@@ -88,6 +88,8 @@ class RenderScene: ObservableObject {
             var transformationModel: matrix_float4x4 = Algebra.Identity(angle: component.angle)
             transformationModel = Algebra.Identity(translation: component.position) * transformationModel
             renderEncoder.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            // All the component rendering must be
+            // impacted by the amount of light it projects
             var componentParams: ObjectParameters = ObjectParameters(isLightObject: 0);
             renderEncoder.setVertexBytes(
                 &componentParams,
@@ -111,6 +113,8 @@ class RenderScene: ObservableObject {
             var transformationModel: matrix_float4x4 = Algebra.Identity(angle: lightComponent.angle)
             transformationModel = Algebra.Identity(translation: lightComponent.position) * transformationModel
             renderEncoder.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            // The light object rendering must not be
+            // impacted by the amount of light it projects
             var lightParams: ObjectParameters = ObjectParameters(isLightObject: 1);
             renderEncoder.setVertexBytes(
                 &lightParams,

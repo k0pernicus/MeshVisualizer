@@ -29,13 +29,14 @@ class Light: BaseObject3D {
     let uses_radians: Bool
     
     init(
+        position: simd_float3,
         angle: simd_float3,
         color: simd_float3,
         type: LightType,
         intensity: Float = 1.0,
         uses_radians: Bool = false
     ) {
-        self.position = [0.0, 0.0, 0.0]
+        self.position = position
         self.angle = angle
         self.forward = [0.0, 0.0, 0.0]
         self.color = color
@@ -77,14 +78,16 @@ class Light: BaseObject3D {
     }
     
     private func rotate() {
-        self.angle.z += 1
-        if self.angle.z > Algebra.MAX_ANGLE {
-            self.angle.z -= Algebra.MAX_ANGLE
-        }
-        self.angle.y += 1
-        if self.angle.y > Algebra.MAX_ANGLE {
-            self.angle.y -= Algebra.MAX_ANGLE
-        }
+        /*
+         self.angle.z += 1
+            if self.angle.z > Algebra.MAX_ANGLE {
+                self.angle.z -= Algebra.MAX_ANGLE
+            }
+            self.angle.y += 1
+            if self.angle.y > Algebra.MAX_ANGLE {
+                self.angle.y -= Algebra.MAX_ANGLE
+            }
+         */
     }
     
     func update() {
