@@ -21,7 +21,7 @@ class RenderScene: ObservableObject {
     /// The camera in the scene
     @Published var camera: Camera
     /// The light in the scene
-    @Published var light: Light
+    @Published var light: Light?
     /// Each object that is figuring in the current scene
     @Published var components: [Object3D]
     /// Enable / disable texture rendering (on live)
@@ -44,7 +44,7 @@ class RenderScene: ObservableObject {
     /// same material
     public var materialsCache: [String: Material] // TODO: should be private
     
-    init(light: Light, components: [Object3D], rotate: Bool = true, enableTextureRendering: Bool = true) {
+    init(components: [Object3D], light: Light?, rotate: Bool = true, enableTextureRendering: Bool = true) {
         self.light = light
         self.camera = Camera(
             position: DEFAULT_CAMERA_POSITION,
@@ -70,10 +70,10 @@ class RenderScene: ObservableObject {
         }
         // Update the camera position in the world
         camera.update()
-        light.update()
-        for component in components {
-            component.update()
+        if light != nil {
+            light!.update()
         }
+        components.forEach { component in component.update() }
         self.frameCount += 1;
     }
     
@@ -88,9 +88,38 @@ class RenderScene: ObservableObject {
             var transformationModel: matrix_float4x4 = Algebra.Identity(angle: component.angle)
             transformationModel = Algebra.Identity(translation: component.position) * transformationModel
             renderEncoder.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            var componentParams: ObjectParameters = ObjectParameters(isLightObject: 0);
+            renderEncoder.setVertexBytes(
+                &componentParams,
+                length: MemoryLayout<ObjectParameters>.stride,
+                index: 3
+            )
             for submesh in component.mesh!.metalMesh.submeshes {
                 renderEncoder.drawIndexedPrimitives(
                     type: self.strip ? .line : .triangle,
+                    indexCount: submesh.indexCount,
+                    indexType: submesh.indexType,
+                    indexBuffer: submesh.indexBuffer.buffer,
+                    indexBufferOffset: submesh.indexBuffer.offset
+                )
+            }
+        }
+        // Render the light if it exists
+        if (light != nil) {
+            let lightComponent = light!
+            renderEncoder.setVertexBuffer(lightComponent.mesh!.metalMesh.vertexBuffers[0].buffer, offset: 0, index: 0)
+            var transformationModel: matrix_float4x4 = Algebra.Identity(angle: lightComponent.angle)
+            transformationModel = Algebra.Identity(translation: lightComponent.position) * transformationModel
+            renderEncoder.setVertexBytes(&transformationModel, length: MemoryLayout<matrix_float4x4>.stride, index: 1)
+            var lightParams: ObjectParameters = ObjectParameters(isLightObject: 1);
+            renderEncoder.setVertexBytes(
+                &lightParams,
+                length: MemoryLayout<ObjectParameters>.stride,
+                index: 3
+            )
+            for submesh in lightComponent.mesh!.metalMesh.submeshes {
+                renderEncoder.drawIndexedPrimitives(
+                    type: .line,
                     indexCount: submesh.indexCount,
                     indexType: submesh.indexType,
                     indexBuffer: submesh.indexBuffer.buffer,
@@ -124,9 +153,12 @@ class RenderScene: ObservableObject {
                 Float(magnitude)
     }
     
-    func rotateCamera(degrees: CGFloat) {
-        camera.angle.z += Float(degrees) / 20
-        // camera.position.y += Float(degrees) / 100
+    func rotateCamera(degrees: CGFloat, around axis: Algebra.TrigAxis) {
+        switch axis {
+        case Algebra.TrigAxis.x: camera.angle.x += Float(degrees) / 20
+        case Algebra.TrigAxis.y: camera.angle.y += Float(degrees) / 20
+        case Algebra.TrigAxis.z: camera.angle.z += Float(degrees) / 20
+        }
     }
     
     func resetCameraPosition() {

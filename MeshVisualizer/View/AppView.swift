@@ -31,7 +31,7 @@ struct AppView: View {
                 .gesture(
                     RotationGesture()
                         .onChanged { gesture in
-                            scene.rotateCamera(degrees: gesture.degrees)
+                            scene.rotateCamera(degrees: gesture.degrees, around: Algebra.TrigAxis.z)
                         }
                 )
                 .onTapGesture(count: 3, perform: {

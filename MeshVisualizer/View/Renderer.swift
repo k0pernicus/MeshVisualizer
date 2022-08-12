@@ -8,15 +8,17 @@
 import Foundation
 import MetalKit
 
-let DEFAULT_FAR_CAMERA_LIMIT: Float = 1000
-let DEFAULT_FIELD_OF_VIEW_Y_AXIS: Float = 45
+let DEFAULT_FAR_CAMERA_LIMIT: Float = 600
+let DEFAULT_FIELD_OF_VIEW_Y_AXIS: Float = 65
 
 class Renderer: NSObject, MTKViewDelegate {
     var parent: ContentView
     var metalDevice: MTLDevice!
     var metalCommandQueue: MTLCommandQueue!
    
+    // Vertex allocator
     let allocator: MTKMeshBufferAllocator!
+    // Texture allocator
     let materialAllocator: MTKTextureLoader
     
     let pipelineState: MTLRenderPipelineState
@@ -36,15 +38,17 @@ class Renderer: NSObject, MTKViewDelegate {
             component.initMesh(device: self.metalDevice, allocator: self.allocator, cache: &scene.meshesCache)
             component.initMaterial(device: self.metalDevice, allocator: self.materialAllocator, cache: &scene.materialsCache)
         }
+        if scene.light != nil {
+            scene.light?.initMesh(device: self.metalDevice, allocator: self.allocator)
+            scene.light?.initMaterial(device: self.metalDevice, allocator: self.materialAllocator, cache: &scene.materialsCache)
+        }
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let library = metalDevice.makeDefaultLibrary()
         pipelineDescriptor.vertexFunction = library?.makeFunction(name: "vertexShader")
-        if (scene.enableTextureRendering) {
-            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "texFragmentShader")
-        } else {
-            pipelineDescriptor.fragmentFunction = library?.makeFunction(name: "fragmentShader")
-        }
+        pipelineDescriptor.fragmentFunction = scene.enableTextureRendering ?
+            library?.makeFunction(name: "texFragmentShader") :
+            library?.makeFunction(name: "fragmentShader")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         // TODO: find a solution for this problem
         pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(scene.components[0].mesh!.metalMesh.vertexDescriptor)
@@ -79,7 +83,12 @@ class Renderer: NSObject, MTKViewDelegate {
         let commandBuffer = metalCommandQueue.makeCommandBuffer()
         
         let renderPassDescriptor = view.currentRenderPassDescriptor
-        renderPassDescriptor?.colorAttachments[0].clearColor = MTLClearColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        renderPassDescriptor?.colorAttachments[0].clearColor = MTLClearColor(
+            red: 1.0,
+            green: 1.0,
+            blue: 1.0,
+            alpha: 1.0
+        )
         renderPassDescriptor?.colorAttachments[0].loadAction = .clear
         renderPassDescriptor?.colorAttachments[0].storeAction = .store
         
@@ -101,13 +110,26 @@ class Renderer: NSObject, MTKViewDelegate {
             farLimit: DEFAULT_FAR_CAMERA_LIMIT
         )
         cameraData.position = self.scene.camera.position;
-        renderEncoder?.setVertexBytes(&cameraData, length: MemoryLayout<CameraParameters>.stride, index: 2)
+        renderEncoder?.setVertexBytes(
+            &cameraData,
+            length: MemoryLayout<CameraParameters>.stride,
+            index: 2
+        )
         
         // Set the light
         var lightParameters: LightParameters = LightParameters()
-        lightParameters.forward = scene.light.forward
-        lightParameters.color = scene.light.color
-        renderEncoder?.setFragmentBytes(&lightParameters, length: MemoryLayout<LightParameters>.stride, index: 0) // buffer 0 of the FS
+        lightParameters.intensity = 1.0 // Full light by default
+        if (scene.light != nil) {
+            let lightSettings = scene.light!
+            lightParameters.forward = lightSettings.forward
+            lightParameters.color = lightSettings.color
+            lightParameters.intensity = lightSettings.intensity
+        }
+        renderEncoder?.setFragmentBytes(
+            &lightParameters,
+            length: MemoryLayout<LightParameters>.stride,
+            index: 0
+        )
         
         scene.render(renderEncoder: renderEncoder!)
         

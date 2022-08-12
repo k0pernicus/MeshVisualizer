@@ -10,14 +10,15 @@ import Foundation
 let DEFAULT_LIGHT_ANGLE: vector_float3 = [0.0, 90.0, 0.0] // [0.0, 120.0, 45.0]
 let DEFAULT_LIGHT_COLOR: vector_float3 = [1.0, 1.0, 1.0]
 
-let light = Light(
+let DEFAULT_LIGHT = Light(
     angle: DEFAULT_LIGHT_ANGLE,
     color: DEFAULT_LIGHT_COLOR,
-    type: .directional
+    type: .directional,
+    intensity: 0.002
 )
 
 /// Renders a Crate object in an empty scene, with Noise texture
-let simpleCrate = RenderScene(light: light, components: [
+let simpleCrate = RenderScene(components: [
     Object3D(
         tag: "crate 0",
         position: [28.0, 0.0, 0.0],
@@ -26,11 +27,11 @@ let simpleCrate = RenderScene(light: light, components: [
         meshFilename: "Crate",
         materialFilename: "Noise"
     ),
-], rotate: true)
+], light: nil, rotate: true)
 
 /// Renders three Crate objects, on top of each others, in an empty scene,
 /// with different textures
-let threeCrates = RenderScene(light: light, components: [
+let threeCrates = RenderScene(components: [
     Object3D(
         tag: "crate 0",
         position: [28.0, 0.0, 0.0],
@@ -55,11 +56,10 @@ let threeCrates = RenderScene(light: light, components: [
         meshFilename: "Crate",
         materialFilename: "Candy"
     ),
-], rotate: true)
+], light: DEFAULT_LIGHT, rotate: true)
 
-/// Renders three Crate objects, on top of each others, in an empty scene,
-/// with different textures
-let ironMan = RenderScene(light: light, components: [
+/// Renders Iron Man. Yes.
+let ironMan = RenderScene(components: [
     Object3D(
         tag: "ironman 0",
         position: [400.0, 0.0, 0.0],
@@ -67,4 +67,16 @@ let ironMan = RenderScene(light: light, components: [
         allows_transformation: true,
         meshFilename: "IronMan"
     ),
-], rotate: false, enableTextureRendering: false)
+], light: nil, rotate: false, enableTextureRendering: false)
+
+/// Renders the "hello world" of graphics: the famous teapot
+let teaPot = RenderScene(components: [
+    Object3D(
+        tag: "teapot 0",
+        position: [28.0, 0.0, 0.0],
+        angle: [90.0, 0.0, 90.0],
+        allows_transformation: false,
+        meshFilename: "Tea_Pot",
+        materialFilename: "Noise"
+    ),
+], light: nil, rotate: false, enableTextureRendering: true)

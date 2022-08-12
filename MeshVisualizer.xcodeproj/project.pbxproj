@@ -18,6 +18,7 @@
 		6920D1062895A03D00495CE0 /* BaseObject3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6920D1052895A03D00495CE0 /* BaseObject3D.swift */; };
 		6920D1092895A21100495CE0 /* Object3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6920D1082895A21100495CE0 /* Object3D.swift */; };
 		6922D7C928950B40008F4BCA /* LinearAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922D7C828950B40008F4BCA /* LinearAlgebra.swift */; };
+		694459A028A6D288003991B4 /* Sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6944599F28A6D288003991B4 /* Sphere.obj */; };
 		69ACDB6D289F0A56003D1E09 /* Scenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ACDB6C289F0A56003D1E09 /* Scenes.swift */; };
 		69B7B3F2289C4A1C0035DD52 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B7B3F1289C4A1C0035DD52 /* AppView.swift */; };
 		69B7B3F4289C4A4B0035DD52 /* Crate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69B7B3F3289C4A4B0035DD52 /* Crate.obj */; };
@@ -30,6 +31,7 @@
 		69C58B1A2896838600AE177F /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C58B192896838600AE177F /* Mesh.swift */; };
 		69C58B1C2896913000AE177F /* IronMan.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69C58B1B2896913000AE177F /* IronMan.obj */; };
 		69D8E3E6289FF8F40031666D /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D8E3E5289FF8F40031666D /* Light.swift */; };
+		69F1563528A2F29000C9022B /* Tea_Pot.obj in Resources */ = {isa = PBXBuildFile; fileRef = 69F1563428A2F29000C9022B /* Tea_Pot.obj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,7 @@
 		6920D1052895A03D00495CE0 /* BaseObject3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseObject3D.swift; sourceTree = "<group>"; };
 		6920D1082895A21100495CE0 /* Object3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object3D.swift; sourceTree = "<group>"; };
 		6922D7C828950B40008F4BCA /* LinearAlgebra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebra.swift; sourceTree = "<group>"; };
+		6944599F28A6D288003991B4 /* Sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sphere.obj; sourceTree = "<group>"; };
 		69ACDB6C289F0A56003D1E09 /* Scenes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenes.swift; sourceTree = "<group>"; };
 		69ACDB70289F120C003D1E09 /* MeshVisualizer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeshVisualizer.entitlements; sourceTree = "<group>"; };
 		69B7B3F1289C4A1C0035DD52 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 		69C58B192896838600AE177F /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		69C58B1B2896913000AE177F /* IronMan.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IronMan.obj; sourceTree = "<group>"; };
 		69D8E3E5289FF8F40031666D /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		69F1563428A2F29000C9022B /* Tea_Pot.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tea_Pot.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,10 +179,12 @@
 		69B7B3FE289C5E830035DD52 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				6944599F28A6D288003991B4 /* Sphere.obj */,
 				69B7B3FF289C613E0035DD52 /* Circle_Box.obj */,
 				69B7B3F3289C4A4B0035DD52 /* Crate.obj */,
 				69C58B162896826000AE177F /* Coffee_Cup.obj */,
 				69C58B1B2896913000AE177F /* IronMan.obj */,
+				69F1563428A2F29000C9022B /* Tea_Pot.obj */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -253,9 +259,11 @@
 				69B7B3F4289C4A4B0035DD52 /* Crate.obj in Resources */,
 				69B7B3FA289C5BF30035DD52 /* Noise.jpg in Resources */,
 				69C58B1C2896913000AE177F /* IronMan.obj in Resources */,
+				694459A028A6D288003991B4 /* Sphere.obj in Resources */,
 				69053607289074AC00F7806F /* Preview Assets.xcassets in Resources */,
 				69B7B400289C613E0035DD52 /* Circle_Box.obj in Resources */,
 				69053604289074AC00F7806F /* Assets.xcassets in Resources */,
+				69F1563528A2F29000C9022B /* Tea_Pot.obj in Resources */,
 				69C58B172896826100AE177F /* Coffee_Cup.obj in Resources */,
 				69B7B3F8289C59310035DD52 /* Candy.jpg in Resources */,
 				69B7B3FC289C5E590035DD52 /* Crate.jpg in Resources */,

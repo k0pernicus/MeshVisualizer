@@ -4,6 +4,10 @@
 //
 //  Created by Antonin on 26/07/2022.
 //
+//  The purpose of this header is to use
+//  common data structures definitions for
+//  both the Swift application and the Metal
+//  shaders.
 
 #ifndef DEF_H
 #define DEF_H
@@ -20,9 +24,14 @@ struct CameraParameters {
     vector_float3 position;
 };
 
+struct ObjectParameters {
+    uint8_t isLightObject;
+};
+
 struct LightParameters {
     vector_float3 forward;
     vector_float3 color;
+    float intensity;
 };
 
 enum LightType {
