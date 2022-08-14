@@ -8,7 +8,7 @@
 import Foundation
 
 /// The skeleton of a basic 3D object
-protocol BaseObject3D {
+protocol BaseObject3D: ObservableObject {
     /// The position of the object in the world space
     var position: simd_float3 { get }
     /// The visualization angle of the object in the world space

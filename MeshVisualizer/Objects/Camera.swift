@@ -8,7 +8,7 @@
 import Foundation
 
 /// Camera object, in a scene
-class Camera: BaseObject3D, ObservableObject {
+class Camera: BaseObject3D {
     // The position of the object in the world space
     var tag: String = "camera"
     @Published var position: simd_float3

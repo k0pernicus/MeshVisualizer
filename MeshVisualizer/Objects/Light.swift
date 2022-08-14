@@ -8,7 +8,7 @@
 import Foundation
 import MetalKit
 
-class Light: BaseObject3D, ObservableObject {
+class Light: BaseObject3D {
     /// The type of light to implement
     enum LightType {
         case directional
@@ -78,16 +78,18 @@ class Light: BaseObject3D, ObservableObject {
     }
     
     private func rotate() {
-        /*
-         self.angle.z += 1
-            if self.angle.z > Algebra.MAX_ANGLE {
-                self.angle.z -= Algebra.MAX_ANGLE
-            }
-            self.angle.y += 1
-            if self.angle.y > Algebra.MAX_ANGLE {
-                self.angle.y -= Algebra.MAX_ANGLE
-            }
-         */
+//        self.angle.z += 1 // Turn horizontal
+//        if self.angle.z > Algebra.MAX_ANGLE {
+//            self.angle.z -= Algebra.MAX_ANGLE
+//        }
+        self.angle.y += 1 // Turn vertical
+        if self.angle.y > Algebra.MAX_ANGLE {
+            self.angle.y -= Algebra.MAX_ANGLE
+        }
+//        self.angle.x += 1
+//        if self.angle.x > Algebra.MAX_ANGLE {
+//            self.angle.x -= Algebra.MAX_ANGLE
+//        }
     }
     
     func update() {

@@ -46,8 +46,8 @@ struct SettingsPanelView: View {
                         Section(header: Text("\(scene.components[index].tag)").font(.subheadline)) {
                             Text(String(format:"Angle: [%.2f,%.2f,%.2f]",scene.components[index].angle.x,scene.components[index].angle.y,scene.components[index].angle.z))
                             Text(String(format:"Position: [%.2f,%.2f,%.2f]",scene.components[index].position.x, scene.components[index].position.y,scene.components[index].position.z))
-                            Text("Mesh: \(scene.components[index].meshFilename ?? "No mesh")")
-                            Text("Material: \(scene.components[index].materialFilename ?? "No material")")
+                            Text("Mesh used: \(scene.components[index].meshFilename ?? "No mesh")")
+                            Text("Material used: \(scene.components[index].materialFilename ?? "No material")")
                         }
                     }
                 }

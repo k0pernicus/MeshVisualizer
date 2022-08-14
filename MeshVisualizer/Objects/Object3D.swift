@@ -11,7 +11,7 @@ import MetalKit
 
 /// A 3D object, to be implemented in a given
 /// render scene
-class Object3D: BaseObject3D, ObservableObject {
+class Object3D: BaseObject3D {
     var tag: String
     @Published var position: simd_float3
     @Published var angle: simd_float3

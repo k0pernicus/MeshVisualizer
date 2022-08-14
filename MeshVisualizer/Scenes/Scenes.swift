@@ -7,7 +7,7 @@
 
 import Foundation
 
-let DEFAULT_LIGHT_POSITION: vector_float3 = [28.0, 0.0, 30]
+let DEFAULT_LIGHT_POSITION: vector_float3 = [28.0, 0.0, 22]
 let DEFAULT_LIGHT_ANGLE: vector_float3 = [0.0, 180.0, 0.0] // [0.0, 120.0, 45.0]
 let DEFAULT_LIGHT_COLOR: vector_float3 = [1.0, 1.0, 1.0]
 
@@ -16,7 +16,7 @@ let DEFAULT_LIGHT = Light(
     angle: DEFAULT_LIGHT_ANGLE,
     color: DEFAULT_LIGHT_COLOR,
     type: .directional,
-    intensity: 0.05
+    intensity: 0.002
 )
 
 /// Renders a Crate object in an empty scene, with Noise texture

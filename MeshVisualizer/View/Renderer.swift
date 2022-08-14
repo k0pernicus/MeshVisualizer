@@ -84,9 +84,9 @@ class Renderer: NSObject, MTKViewDelegate {
         
         let renderPassDescriptor = view.currentRenderPassDescriptor
         renderPassDescriptor?.colorAttachments[0].clearColor = MTLClearColor(
-            red: 1.0,
-            green: 1.0,
-            blue: 1.0,
+            red: 0.8,
+            green: 0.5,
+            blue: 0.4,
             alpha: 1.0
         )
         renderPassDescriptor?.colorAttachments[0].loadAction = .clear
