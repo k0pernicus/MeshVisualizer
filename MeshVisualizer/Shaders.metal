@@ -76,7 +76,7 @@ fragment float4 texFragmentShader(
         ambientColor = light.intensity * baseColor; // TODO: pass the value as function parameter
         
         // Compute now the light amount for each vertex
-        float lightAmount = max(0.1, dot(input.normal, light.forward));
+        float lightAmount = max(0.1, dot(input.normal, -light.forward));
         
         // Finalize the amount of color to diffuse
         ambientColor += lightAmount * baseColor * light.color;

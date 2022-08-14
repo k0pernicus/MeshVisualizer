@@ -29,9 +29,15 @@ class RenderScene: ObservableObject {
     /// If set, strip render each object as set of lines, and
     /// do not draw the triangles (for debugging perspective)
     @Published var strip: Bool = false
+    /// The number of frames per second computed
+    /// during the previous frame
+    @Published var fps: Int = 0
     
-    /// FPS
-    private var frameCount: Int = 0
+    public let tag: String
+    /// Increment at each rendering pass, and reset
+    /// after one second to compute the number of
+    /// computed frames per second (see fps attribute)
+    var frameCount: Int = 0
     /// The number of seconds since the first frame
     private var sec: Int = 0
     /// Internal private attribute in order to compute
@@ -44,7 +50,14 @@ class RenderScene: ObservableObject {
     /// same material
     public var materialsCache: [String: Material] // TODO: should be private
     
-    init(components: [Object3D], light: Light?, rotate: Bool = true, enableTextureRendering: Bool = true) {
+    init(
+        tag: String,
+        components: [Object3D],
+        light: Light?,
+        rotate: Bool = true,
+        enableTextureRendering: Bool = true
+    ) {
+        self.tag = tag
         self.light = light
         self.camera = Camera(
             position: DEFAULT_CAMERA_POSITION,
@@ -66,6 +79,7 @@ class RenderScene: ObservableObject {
             self.sec += 1
             self.endDate = Date().addingTimeInterval(1)
             logger.debug("[\(self.sec)]: \(self.frameCount) FPS")
+            self.fps = self.frameCount
             self.frameCount = 0
         }
         // Update the camera position in the world
@@ -75,6 +89,11 @@ class RenderScene: ObservableObject {
         }
         components.forEach { component in component.update() }
         self.frameCount += 1;
+        self.updateView()
+    }
+    
+    func updateView() {
+        self.objectWillChange.send()
     }
     
     /// For each internal component, fills and set the vertex buffer and draw each element

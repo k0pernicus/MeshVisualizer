@@ -7,8 +7,8 @@
 
 import Foundation
 
-let DEFAULT_LIGHT_POSITION: vector_float3 = [28.0, 0.0, 18]
-let DEFAULT_LIGHT_ANGLE: vector_float3 = [0.0, 0.0, 90.0] // [0.0, 120.0, 45.0]
+let DEFAULT_LIGHT_POSITION: vector_float3 = [28.0, 0.0, 30]
+let DEFAULT_LIGHT_ANGLE: vector_float3 = [0.0, 180.0, 0.0] // [0.0, 120.0, 45.0]
 let DEFAULT_LIGHT_COLOR: vector_float3 = [1.0, 1.0, 1.0]
 
 let DEFAULT_LIGHT = Light(
@@ -20,7 +20,7 @@ let DEFAULT_LIGHT = Light(
 )
 
 /// Renders a Crate object in an empty scene, with Noise texture
-let simpleCrate = RenderScene(components: [
+let simpleCrate = RenderScene(tag: "simpleCrate", components: [
     Object3D(
         tag: "crate 0",
         position: [28.0, 0.0, 0.0],
@@ -33,7 +33,7 @@ let simpleCrate = RenderScene(components: [
 
 /// Renders three Crate objects, on top of each others, in an empty scene,
 /// with different textures
-let threeCrates = RenderScene(components: [
+let threeCrates = RenderScene(tag: "threeCrates", components: [
     Object3D(
         tag: "crate 0",
         position: [28.0, 0.0, 0.0],
@@ -61,7 +61,7 @@ let threeCrates = RenderScene(components: [
 ], light: DEFAULT_LIGHT, rotate: true)
 
 /// Renders Iron Man. Yes.
-let ironMan = RenderScene(components: [
+let ironMan = RenderScene(tag: "ironMan", components: [
     Object3D(
         tag: "ironman 0",
         position: [400.0, 0.0, 0.0],
@@ -72,7 +72,7 @@ let ironMan = RenderScene(components: [
 ], light: nil, rotate: false, enableTextureRendering: false)
 
 /// Renders the "hello world" of graphics: the famous teapot
-let teaPot = RenderScene(components: [
+let teaPot = RenderScene(tag: "teaPot", components: [
     Object3D(
         tag: "teapot 0",
         position: [28.0, 0.0, 0.0],

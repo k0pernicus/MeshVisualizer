@@ -8,7 +8,7 @@
 import Foundation
 import MetalKit
 
-class Light: BaseObject3D {
+class Light: BaseObject3D, ObservableObject {
     /// The type of light to implement
     enum LightType {
         case directional
@@ -16,8 +16,8 @@ class Light: BaseObject3D {
         case spotlight
     }
     
-    var position: simd_float3
-    var angle: simd_float3
+    @Published var position: simd_float3
+    @Published var angle: simd_float3
     var tag: String = "camera"
     var mesh: Mesh?
     var material: Material?

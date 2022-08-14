@@ -7,15 +7,24 @@
 
 import SwiftUI
 
+/// Minimal height of the game engine window
+private let minSideBarHeight: CGFloat = 720
+
+/// Minimal width of the right side bar
+private let minSideBarWidth: CGFloat = 250
+
+let DEFAULT_RENDERER_HEIGHT: CGFloat = 800
+let DEFAULT_RENDERER_WIDTH: CGFloat = 1000
+
 struct AppView: View {
     
     @EnvironmentObject var scene: RenderScene
     
     var body: some View {
-        ZStack{
+        HStack{
+            Spacer()
             ContentView()
                 .frame(width: DEFAULT_RENDERER_WIDTH, height: DEFAULT_RENDERER_HEIGHT, alignment: .center)
-                .aspectRatio(contentMode: .fit)
                 .gesture(
                     DragGesture(minimumDistance: 2.0)
                         .onChanged { gesture in
@@ -37,10 +46,11 @@ struct AppView: View {
                 .onTapGesture(count: 3, perform: {
                     scene.resetCameraPosition()
                 })
+                .border(.black, width: 5)
+            Spacer()
+            SettingsPanelView(panelHeight: minSideBarHeight, panelWidth: minSideBarWidth)
         }
-        .aspectRatio(contentMode: .fill)
-        .fixedSize()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray)
     }
 }
-

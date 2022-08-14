@@ -13,6 +13,7 @@
 		69053607289074AC00F7806F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69053606289074AC00F7806F /* Preview Assets.xcassets */; };
 		6905360E2890755600F7806F /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6905360D2890755600F7806F /* Renderer.swift */; };
 		6905361128907CC000F7806F /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6905361028907CBF00F7806F /* Shaders.metal */; };
+		690A2E7428A92E9D0028A7AB /* SettingsPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690A2E7328A92E9D0028A7AB /* SettingsPanelView.swift */; };
 		6920D1022895925600495CE0 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6920D1012895925600495CE0 /* Camera.swift */; };
 		6920D10428959F6B00495CE0 /* RenderScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6920D10328959F6B00495CE0 /* RenderScene.swift */; };
 		6920D1062895A03D00495CE0 /* BaseObject3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6920D1052895A03D00495CE0 /* BaseObject3D.swift */; };
@@ -43,6 +44,7 @@
 		6905360D2890755600F7806F /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		6905360F28907AFA00F7806F /* def.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = def.h; sourceTree = "<group>"; };
 		6905361028907CBF00F7806F /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		690A2E7328A92E9D0028A7AB /* SettingsPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPanelView.swift; sourceTree = "<group>"; };
 		6920D1012895925600495CE0 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		6920D10328959F6B00495CE0 /* RenderScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderScene.swift; sourceTree = "<group>"; };
 		6920D1052895A03D00495CE0 /* BaseObject3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseObject3D.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				69C58B192896838600AE177F /* Mesh.swift */,
 				6905360D2890755600F7806F /* Renderer.swift */,
 				6920D10328959F6B00495CE0 /* RenderScene.swift */,
+				690A2E7328A92E9D0028A7AB /* SettingsPanelView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				6905360E2890755600F7806F /* Renderer.swift in Sources */,
 				6920D10428959F6B00495CE0 /* RenderScene.swift in Sources */,
 				6920D1062895A03D00495CE0 /* BaseObject3D.swift in Sources */,
+				690A2E7428A92E9D0028A7AB /* SettingsPanelView.swift in Sources */,
 				6922D7C928950B40008F4BCA /* LinearAlgebra.swift in Sources */,
 				69D8E3E6289FF8F40031666D /* Light.swift in Sources */,
 				69053600289074AA00F7806F /* MeshVisualizerApp.swift in Sources */,
@@ -300,6 +304,7 @@
 		69053608289074AC00F7806F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -352,6 +357,8 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -360,6 +367,7 @@
 		69053609289074AC00F7806F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -405,6 +413,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;

@@ -11,10 +11,10 @@ import MetalKit
 
 /// A 3D object, to be implemented in a given
 /// render scene
-class Object3D: BaseObject3D {
+class Object3D: BaseObject3D, ObservableObject {
     var tag: String
-    var position: simd_float3
-    var angle: simd_float3
+    @Published var position: simd_float3
+    @Published var angle: simd_float3
     
     var meshFilename: String?
     var mesh: Mesh?
@@ -22,6 +22,7 @@ class Object3D: BaseObject3D {
     var materialFilename: String?
     var material: Material?
     
+    var display: Bool
     var rotation_angle_z: Float?
     
     init(
@@ -38,6 +39,7 @@ class Object3D: BaseObject3D {
         }
         self.meshFilename = meshFilename
         self.materialFilename = materialFilename
+        self.display = true
     }
     
     /// Allocates memory and initializes a mesh to render
@@ -87,5 +89,9 @@ class Object3D: BaseObject3D {
         if self.angle.z > Algebra.MAX_ANGLE {
             self.angle.z -= Algebra.MAX_ANGLE
         }
+    }
+    
+    func toggleDisplay() {
+        self.display = !self.display
     }
 }
