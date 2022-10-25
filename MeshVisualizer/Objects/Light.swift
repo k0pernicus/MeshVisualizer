@@ -27,6 +27,7 @@ class Light: BaseObject3D {
     let type: LightType
     var intensity: Float
     let uses_radians: Bool
+    let angle_changes: vector_float3
     
     init(
         position: simd_float3,
@@ -43,6 +44,7 @@ class Light: BaseObject3D {
         self.type = type
         self.uses_radians = uses_radians
         self.intensity = intensity
+        self.angle_changes = [Float.random(in: 0...1), Float.random(in: 0...1), Float.random(in: 0...1)]
         
         // Compute the first forward
         self.update()
@@ -78,18 +80,18 @@ class Light: BaseObject3D {
     }
     
     private func rotate() {
-//        self.angle.z += 1 // Turn horizontal
-//        if self.angle.z > Algebra.MAX_ANGLE {
-//            self.angle.z -= Algebra.MAX_ANGLE
-//        }
-        self.angle.y += 1 // Turn vertical
+        self.angle.z += self.angle_changes[2] // Turn horizontal
+        if self.angle.z > Algebra.MAX_ANGLE {
+            self.angle.z -= Algebra.MAX_ANGLE
+        }
+        self.angle.y += self.angle_changes[1] // Turn vertical
         if self.angle.y > Algebra.MAX_ANGLE {
             self.angle.y -= Algebra.MAX_ANGLE
         }
-//        self.angle.x += 1
-//        if self.angle.x > Algebra.MAX_ANGLE {
-//            self.angle.x -= Algebra.MAX_ANGLE
-//        }
+        self.angle.x += self.angle_changes[0]
+        if self.angle.x > Algebra.MAX_ANGLE {
+            self.angle.x -= Algebra.MAX_ANGLE
+        }
     }
     
     func update() {

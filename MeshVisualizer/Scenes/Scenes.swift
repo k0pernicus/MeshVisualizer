@@ -48,7 +48,7 @@ let threeCrates = RenderScene(tag: "threeCrates", components: [
         angle: [0.0, 0.0, 0.0],
         allows_transformation: true,
         meshFilename: "Crate",
-        materialFilename: "Noise"
+        materialFilename: "Crate"
     ),
     Object3D(
         tag: "crate 2",

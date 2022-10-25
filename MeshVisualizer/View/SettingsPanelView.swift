@@ -28,7 +28,7 @@ struct SettingsPanelView: View {
                     Section(header: Text("Camera settings").font(.headline)) {
                         Text(String(format:"Angle: [%.2f,%.2f,%.2f]", scene.camera.angle.x, scene.camera.angle.y,scene.camera.angle.z))
                         Text(String(format:"Position: [%.2f,%.2f,%.2f]", scene.camera.position.x, scene.camera.position.y,scene.camera.position.z))
-                        
+                        Text(String(format:"Distance: %.3f", simd.length(scene.camera.position)))
                     }
                     if (scene.light != nil) {
                         let light = scene.light!

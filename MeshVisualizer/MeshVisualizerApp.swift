@@ -35,14 +35,6 @@ struct MeshVisualizerApp: App {
                     .environmentObject(scene)
             }
             .navigationTitle("Mesh Visualizer")
-//            .toolbar{
-//                ToolbarItemGroup {
-//                    Button(action: {showPanel.toggle()}, label: {
-//                        Image(systemName: "sidebar.right")
-//                    })
-//                        .help(Text("Toggle the right panel"))
-//                }
-//            }
         }
     }
 }

@@ -152,6 +152,7 @@ class RenderScene: ObservableObject {
         }
     }
     
+    /// Moves the y and z angles of the camera, based on an offset.
     func spinCamera(offset: CGSize) {
         let dTheta: Float = Float(offset.width) * 0.005
         let dPhi: Float = Float(offset.height) * 0.005
@@ -169,22 +170,43 @@ class RenderScene: ObservableObject {
         }
     }
     
+    /// Zoom-in and zoom-out the scene based on the magnitude parameter.
+    /// Zoom-in if the magnitude is positive, otherwise zoom-out.
     func zoomCamera(magnitude: CGFloat) {
-        camera.position.x +=
+        camera.position.z +=
             (magnitude < 1.0) ?
                 -(Float(magnitude) + 1.0) :
                 Float(magnitude)
     }
     
-    func rotateCamera(degrees: CGFloat, around axis: Algebra.TrigAxis) {
-        switch axis {
-        case Algebra.TrigAxis.x: camera.angle.x += Float(degrees) / 20
-        case Algebra.TrigAxis.y: camera.angle.y += Float(degrees) / 20
-        case Algebra.TrigAxis.z: camera.angle.z += Float(degrees) / 20
-        }
+    /// Moves the position of the camera around and x and y axises,
+    /// based on the offset width and height.
+    /// The offset is multiplied with a coefficient (default: 0.002) in order
+    /// to reduce the drastic position movement, which is smoother than
+    /// the default one (1.0).
+    /// You can disable the drag / mouse vertical invertion setting the
+    /// `verticalInvertion` parameter to `false`.
+    func moveCamera(
+        offset: CGSize,
+        smoothFactor factor: Float = 0.002,
+        verticalInvertion: Bool = false,
+        horizontalInvertion: Bool = true
+    ) {
+        let dTheta: Float = Float(offset.width) * factor
+        let dPhi: Float = Float(offset.height) * factor
+        
+        camera.moveBasedOn(axis: Algebra.TrigAxis.y, delta: horizontalInvertion ? -(dTheta) : dTheta)
+        camera.moveBasedOn(axis: Algebra.TrigAxis.x, delta: verticalInvertion ? -(dPhi) : dPhi)
     }
     
-    func resetCameraPosition() {
+    /// Rotates the camera object around a given axis, for a certain number of degrees.
+    func rotateCamera(degrees: CGFloat, around axis: Algebra.TrigAxis) {
+        let degrees = Float(degrees) / 20 // Slow down the rotation
+        camera.rotateAround(axis: axis, degree: degrees)
+    }
+    
+    /// Put back the default camera position and angle settings
+    func resetCamera() {
         camera.position = DEFAULT_CAMERA_POSITION
         camera.angle = DEFAULT_CAMERA_ANGLE
     }

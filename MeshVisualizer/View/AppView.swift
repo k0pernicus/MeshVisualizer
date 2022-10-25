@@ -22,7 +22,7 @@ struct AppView: View {
                 .gesture(
                     DragGesture(minimumDistance: 2.0)
                         .onChanged { gesture in
-                            sceneState.spinCamera(offset: gesture.translation)
+                            sceneState.moveCamera(offset: gesture.translation)
                         }
                 )
                 .gesture(
@@ -38,7 +38,7 @@ struct AppView: View {
                         }
                 )
                 .onTapGesture(count: 3, perform: {
-                    sceneState.resetCameraPosition()
+                    sceneState.resetCamera()
                 })
                 .border(.black, width: 5)
         }
