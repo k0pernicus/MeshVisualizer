@@ -1,5 +1,7 @@
 # MeshVisualizer
-A simple Swift / Metal tool to load and visualize .obj mesh files
+
+A simple Swift / Metal tool to load and visualize mesh objects (.obj files).  
+Works on iPadOS, iOS, and macOS (Apple silicon & Intel chips).
 
 ## Supported operating systems
 
